@@ -1,4 +1,4 @@
 pip install -r requirements.txt --no-index
 
-export FLASK_APP=server.py
+export FLASK_APP=run.py
 flask run
