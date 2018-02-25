@@ -1,12 +1,7 @@
-/**************************************************************
-Sorry can't separate components into different files because of 
-web development complexities (aka javascript nonesense)
-**************************************************************/
-
-// Name form - A component for having users tell 
+// Name form - A component for having users tell
 // the app their name.
 Vue.component('name-form', {
-   template: 
+   template:
     `<div class='fullscreen name-form'></div>`
 });
 
@@ -80,6 +75,7 @@ var app = new Vue({
         twitterUrl:  '',
         facebookUrl: '',
     },
+    results:{}
   },
   mounted: function () {
     console.log('mounted... called');
