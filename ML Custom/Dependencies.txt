@@ -1,0 +1,9 @@
+Dependencies
+
+sentence_similiarity.py
+
+-nltk.download()
+-nltk.download('data')
+-nltk.donwload('stopwords')
+-nltk.download('punkt')
+-nltk.download('wordnet')
