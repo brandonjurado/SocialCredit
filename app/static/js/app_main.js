@@ -13,7 +13,8 @@ Vue.component('name-form', {
 // Contains about button too.
 Vue.component('social-media-bar', {
   template:
-  ` 
+  `
+  <button>Click</button> 
   <nav class="social-media-bar navbar navbar-light bg-light">
     <a class="credio-icon navbar-brand" href="#">
       <img src="/img/credio.svg" width="30" height="30" class="d-inline-block align-top" alt="">Credio

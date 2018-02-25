@@ -2,13 +2,63 @@
     <head>
         <title>Credit.</title>
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>    
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
     </head>
     <body>
+        <div id="fb-root"></div>
         <div id="app">
             <name-form v-if="showNameForm"></name-form>
             <top-level></top-level>
+            <div id="fb-root"></div>
+
+        <script>
+        FB.init({
+    appId      : '197420487525406',
+    status     : true,
+    xfbml      : true,
+    version    : 'v2.7' // or v2.6, v2.5, v2.4, v2.3
+  });
+
+        // Load the SDK asynchronously
+        (function(d){
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+        }(document));
+
+        function login() {
+            FB.login(function(response) {
+
+            // handle the response
+            FB.api('/1695668353825295', function(response) {
+                console.log(response);
+            });
+
+            }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
+        }
+
+        function logout() {
+            FB.logout(function(response) {
+              // user is now logged out
+            });
+        }
+
+        var status = FB.getLoginStatus();
+
+        console.log(status);
+
+        </script>
+
+        <button onclick="javascript:login();">Login Facebook</button>
+
+        <br>
+
+<button onclick="javascript:logout();">Logout from Facebook</button>    
         </div>
     </body>
     <script src="{{ url_for('static', filename='js/build/main.bundle.js') }}"></script>
+
 </html>
