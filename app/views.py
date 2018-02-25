@@ -1,9 +1,12 @@
+#!/usr/bin/env python3
 from __future__ import print_function
 from app import app
 import tweepy
 from flask import Flask, redirect, url_for, session, request, render_template, flash
 import flask
 import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
 from textblob import TextBlob
 
 #Variables that contains the user credentials to access Twitter API
@@ -74,7 +77,8 @@ def get_verification():
     parseBlob = ''
     for i in range(len(tweets)):
         parseBlob += str(tweets[i][2])
-    blob = TextBlob(parseBlob)
+    text = parseBlob.decode('ascii', errors="ignore")
+    blob = TextBlob(text)
     for sentence in blob.sentences:
         runningScore += sentence.sentiment.polarity
         count += 1
