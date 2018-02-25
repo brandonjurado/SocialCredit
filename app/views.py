@@ -14,35 +14,6 @@ session = dict()
 db = dict()
 callback_url = 'http://127.0.0.1:5000/verify'
 
-def get_tweets(username):
-         
-        # Authorization to consumer key and consumer secret
-        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
- 
-        # Access to user's access key and access secret
-        auth.set_access_token(access_token, access_token_secret)
- 
-        # Calling api
-        api = tweepy.API(auth)
- 
-        # 200 tweets to be extracted
-        number_of_tweets=200
-        tweets = api.user_timeline(screen_name=username)
- 
-        # Empty Array
-        tmp=[] 
- 
-        # create array of tweet information: username, 
-        # tweet id, date/time, text
-        tweets_for_csv = [tweet.text for tweet in tweets] # CSV file created 
-        for j in tweets_for_csv:
- 
-            # Appending tweets to the empty array tmp
-            tmp.append(j) 
- 
-        # Printing the tweets
-        print(tmp)
-
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -89,8 +60,7 @@ def get_verification():
     tweets = get_all_tweets(user, api)
     #print("\n\n\n\n===================\nTweets: ", tweets)
     # User data printed in line below in console for testing - figure out what we can do with this data in Front-End View
-    print("\n\n\n\n===================\nUser data in json format: ", user._json)
-    get_tweets(user)
+    #print("\n\n\n\n===================\nUser data in json format: ", user._json)
     #store in a db
     db['api']=api
     db['access_token_key']=auth.request_token['oauth_token']
@@ -110,18 +80,12 @@ def get_all_tweets(user, api):
 
     #keep grabbing tweets until there are no tweets left to grab
     while len(new_tweets) > 0:
-        print("getting tweets before %s" % (oldest))
-
         #all subsiquent requests use the max_id param to prevent duplicates
         new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest)
-
         #save most recent tweets
         alltweets.extend(new_tweets)
-
         #update the id of the oldest tweet less one
         oldest = alltweets[-1].id - 1
-
-        print("...%s tweets downloaded so far" % (len(alltweets)))
 
     #transform the tweepy tweets into a 2D array that will populate the csv
     outtweets = [[tweet.id_str, tweet.created_at, tweet.text.encode("utf-8")] for tweet in alltweets]
