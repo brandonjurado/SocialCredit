@@ -169,7 +169,7 @@ var app = new Vue({
     },
 
     twitterLoginHandler: function() {
-      axios.get('/twitter')
+      axios.post('/twitter')
            .then(function(resp){
             console.log(resp);
            })
