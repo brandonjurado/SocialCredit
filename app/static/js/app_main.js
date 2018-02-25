@@ -49,7 +49,7 @@ Vue.component('app-body',{
             <div class="score-progress">
               <div id="circle"></div>
             <div class="score-info">
-              <button class='btn btn-large'>Calculate</button>
+              <button v-on:click="calculate" class='btn btn-large'>Calculate</button>
             </div>
             </div>
           </div>
@@ -60,7 +60,14 @@ Vue.component('app-body',{
       </div>
     </div>
   `,
-  props: ['progressValue']
+  props: ['progressValue'],
+  methods:
+  {
+    calculate: function() {
+      this.$emit('calculateevent');
+      console.log('calculating socre...');
+    }
+  }
 });
 
 // Contains top level div
@@ -70,13 +77,19 @@ Vue.component('top-level', {
      <menu-bar v-on:fbloginevent="doFbLogin" 
                v-on:tbloginevent="doTbLogin">
      </menu-bar>
-     <app-body v-bind:progressValue='60'></app-body>
+     <app-body v-bind:progressValue='60'
+               v-on:calculateevent="doCalculate">
+     </app-body>
    </div>
   `,
   methods: {
     doFbLogin: function() {
       this.$emit('dofbloginevent');
       console.log('doFbLogin emmitted');
+    },
+    doCalculate: function() {
+      this.$emit('docalculateevent');
+      console.log('doCalculate emmitted');
     },
     doTbLogin: function() {
       this.$emit('dotbloginevent');
@@ -101,18 +114,22 @@ var app = new Vue({
   },
   mounted: function () {
     console.log('mounted... called');
-  
+    var self = this;
+    let sc = self.score;
+
     $('#circle').circleProgress({
-      value: 0.25,
+      value: sc,
       size: 400,
       thickness: 70,
     }).on('circle-animation-progress', function(event, v) {
+        sc = self.score;
         var obj = $(this).data('circle-progress'),
             ctx = obj.ctx,
             s = obj.size;
 
         //console.log("progress value: "+v);
-        var sv = (v).toFixed();
+        var sv = Math.floor(sc * v * 100);
+        console.log("SV: " +  sv);
         var fill = obj.arcFill;
 
         ctx.save();
@@ -130,7 +147,19 @@ var app = new Vue({
     });
   },
   methods: {
-    calculate: function() {},
+    animateProgressBar: function() {
+      console.log("animate handler called");
+
+    },
+    calculate: function() {
+      axios.get('/get_score')
+            .then((resp) => {
+              this.score = resp.data;
+              console.log(resp);
+              $('#circle').circleProgress('value', this.score);
+            })
+           .catch(function(err){console.log(err);});
+    },
 
     /// Prelude for facebook api.
     /// Handles Loading of face book api.
@@ -173,8 +202,9 @@ var app = new Vue({
        //     .then(function(resp){console.log(resp);})
         //   .catch(function(err){console.log(err);})
         window.location = '/twitter';
+    },
 
-    }
+
   },
   computed: {
     computedScore: function() {

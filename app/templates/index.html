@@ -16,7 +16,9 @@
         <div id="app">
             <name-form v-if="showNameForm"></name-form>
             <top-level v-on:dofbloginevent="facebookLoginHandler" 
-                       v-on:dotbloginevent="twitterLoginHandler">
+                       v-on:dotbloginevent="twitterLoginHandler"
+                       v-on:docalculateevent="calculate"
+                       v-on:circle-animation-start="animateProgressBar">
             </top-level>
      <!--        <form action="/twitter" method="post">
                 <button class="btn btn-primary" type="submit">Twitter</button>
