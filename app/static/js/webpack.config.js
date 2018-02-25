@@ -16,7 +16,11 @@ var path = require('path');
                  query: {
                      presets: ['es2015']
                  }
-             }
+             },
+             {
+                test:/\.(s*)css$/,
+                loader:['style-loader','css-loader', 'sass-loader']
+            }
          ]
      },
      stats: {

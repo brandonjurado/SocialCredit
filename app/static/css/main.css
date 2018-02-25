@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+:root {
+    --primary-color: #444;
+    --secondary-color: white;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    font-family: 'Open Sans', sans-serif;
+}
+
+.content-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+.menu-bar {
+    background-color: inherit;
+    font-size: 1.5em;
+    color: inherit;
+    padding: 0px;
+    height:15%;
+    width: 100%;
+    padding-left: 0.2em;
+    padding-right: 0.2em;
+    position: relative;
+    display: inline-flex;
+    border-bottom: 0.2em #222 solid;
+}
+
+.score-progress {
+    display: block;
+    overflow: hidden;
+    font-size: .75rem;
+    background-color: #e9ecef;
+    border-radius: .25rem;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    background: transparent;
+}
+
+.score-progress #circle {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+    height: 75%;
+}
+
+.score-progress button {
+    width: 70%;
+    font-size: 2rem;
+    border-radius: 0px;
+    background-color: #42b983;
+    transition: all .2s ease-in-out;
+    vertical-align: middle;
+    box-shadow: 0px 0px 30px rgba(10,10,10,0.5);
+}
+
+.score-progress button:hover {
+    transform: scale(1.1); 
+}
+
+.menu-bar {box-shadow: 0px 0px 40px rgba(0,0,0,0.45);}
+
+.menu-bar > .banner {
+    color: var(--secondary-color);
+    margin-right: 0.4em
+    //width: 10%;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+    padding-top: 0.25em;
+    font-size: 2em;
+    text-shadow: 0px 0px 5px rgba(0,0,0,0.9);
+    //background-color: black;
+}
+
+.menu-bar > .social-media {
+    color: var(--secondary-color);
+    margin-right: 0.4em;
+    width: 90%;
+}
+
+.app-body {
+    padding: 0px;
+    width: 100%;
+    height: 85%;
+}
+
+
+.app-body .container-fluid,
+.app-body .container-fluid .row {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+}
+
+
+a, a:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
+.social-media .social-media-wrapper {
+    display: inline-flex;
+    height: 100%;
+    width: 100%;
+    justify-content: flex-start;
+}
+
+.social-media .social-media-wrapper .social-media-btn {
+    display: flex;
+    height: 100%;
+    width: 10%;
+    text-align: center;
+    vertical-align:middle;
+    //line-height: 200px;
+    display: block;
+    padding-top: 2%;
+    padding-bottom: 2%;
+    text-shadow: 0px 0px 5px rgba(0,0,0,0.9);
+    
+}
+
+.social-media .social-media-wrapper .social-media-btn.ab-btn.right-align {
+    margin-left: auto;
+    background-color: #222;
+    vertical-align: middle;
+
+}
+
+.social-media .social-media-wrapper .social-media-btn:hover {
+    background-color: #9999ee;
+}
+
+
+.social-media .social-media-wrapper .social-media-btn [class^="socicon-"] 
+,.social-media .social-media-wrapper .social-media-btn [class^="fa"] {
+    width: 100%;
+    font-size: 2.5em;
+    transition-property: font-size;
+    transition-duration: 250ms;
+    vertical-align: middle;
+    transition-timming-function: ease-out;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.social-media .social-media-wrapper .social-media-btn [class^="socicon-"]:hover 
+,.social-media .social-media-wrapper .social-media-btn [class^="fa"]:hover {
+    font-size: 2.8em;
+    margin-top: 10px;
+}
+
+
+.right-align {
+    margin-right: -15px;
+}
+
+.social-media .social-media-wrapper .social-media-btn:hover {
+
+}
+
+.app-body {
+    background-color: inherit;
+}
