@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
 :root {
-    --primary-color: #444;
+    --primary-color: #555;
     --secondary-color: white;
 }
 
@@ -14,7 +14,20 @@ html, body {
     background-color: var(--primary-color);
     color: var(--secondary-color);
     font-family: 'Open Sans', sans-serif;
+    background-image: url('/static/img/dark-dotted-2.png');
 }
+
+.col-md-5, .col-md-7 {
+    padding: 0px;
+}
+
+.col-md-5 .slanted {
+    background: orange;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+}
+
 
 .content-wrapper {
     position: relative;
@@ -22,6 +35,21 @@ html, body {
     height: 100%;
     padding: 0px;
     margin: 0px;
+}
+
+.col-md-7.left:after {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 700px;
+    z-index: 1;
+    background: orange;
+    transform-origin: bottom left;
+    transform: skew(-5deg, 0deg);
+    box-shadow: 10px 0px 30px rgba(10,10,10,0.35) inset;
 }
 
 .menu-bar {
@@ -58,20 +86,21 @@ html, body {
 }
 
 .score-progress button {
-    width: 70%;
+    width: 50%;
     font-size: 2rem;
     border-radius: 0px;
     background-color: #42b983;
     transition: all .2s ease-in-out;
     vertical-align: middle;
     box-shadow: 0px 0px 30px rgba(10,10,10,0.5);
+    color: white;
 }
 
 .score-progress button:hover {
     transform: scale(1.1); 
 }
 
-.menu-bar {box-shadow: 0px 0px 40px rgba(0,0,0,0.45);}
+.menu-bar {box-shadow: 800px 0px 40px rgba(10,10,10,0.5);}
 
 .menu-bar > .banner {
     color: var(--secondary-color);
@@ -160,7 +189,6 @@ a, a:hover {
 .social-media .social-media-wrapper .social-media-btn [class^="socicon-"]:hover 
 ,.social-media .social-media-wrapper .social-media-btn [class^="fa"]:hover {
     font-size: 2.8em;
-    margin-top: 10px;
 }
 
 
