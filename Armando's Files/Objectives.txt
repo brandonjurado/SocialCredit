@@ -1,0 +1,61 @@
+//``````````````alcoholic
+-Pictures of beer
+-Pictures of liqour
+-Drinking buddies
+-Pictures at bar
+-Location at night clubs, bars, pubs
+-"So drunk last night"
+-"Need more booze"
+-""
+
+Keywords
+beer,cold one,cold ones,cerveza,keg,stealla artois,guinness,heineken,budweiser,coors light,coors,miller,miller lite,corona,blue moon,pregame
+
+//``````````````drug user
+-
+
+Keywords
+rave,concert,
+
+//``````````````literacy
+
+
+Keywords
+
+//``````````````Travel
+-Location is airport, hotel, monuments
+-"flight delayed"
+-""
+Keywords
+"New York City","Philadelphia",	"Honolulu","Maui","San Francisco","Grand Canyon","Sonoma","Washington, D.C.","New Orleans"
+	"San Diego"
+	"Kauai"
+	"Hawaii - The Big Island"
+	"Breckenridge"
+	"Boston"
+	"Miami"
+	"Los Angeles"
+	"Charleston"
+	"Yosemite"
+	"Seattle"
+	"Asheville, NC"
+	"Park City"
+	"Denver"
+	"Savannah"
+	"Big Sur"
+	"Yellowstone"
+
+//``````````````Purchasing often
+-'I got this'
+-Says they are buying something
+-location is malls, car dealers, stores
+-
+
+//``````````````Debt
+-Asks for money
+-Complains about bank
+-"$0 dollars"
+-
+
+Keywords
+broke,no money,poor,poo,
