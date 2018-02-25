@@ -103,7 +103,7 @@ var app = new Vue({
     console.log('mounted... called');
   
     $('#circle').circleProgress({
-      value: 0.25,
+      value: 0.5,
       size: 400,
       thickness: 70,
     }).on('circle-animation-progress', function(event, v) {
@@ -112,7 +112,8 @@ var app = new Vue({
             s = obj.size;
 
         //console.log("progress value: "+v);
-        var sv = (v).toFixed();
+        var sv = ( v * 100);
+        console.log("SV: " +  sv);
         var fill = obj.arcFill;
 
         ctx.save();
@@ -173,7 +174,6 @@ var app = new Vue({
        //     .then(function(resp){console.log(resp);})
         //   .catch(function(err){console.log(err);})
         window.location = '/twitter';
-
     }
   },
   computed: {
