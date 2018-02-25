@@ -68,12 +68,12 @@ def get_verification():
     api = tweepy.API(auth)
     # Get and store authenticated users information in 'user' var
     #user = api.get_user('kayhart_')
-    user = api.me()
-    session['tweets'] = get_all_tweets(user, api)
-    
+    session['user'] = api.me()
+    session['tweets'] = get_all_tweets(api.me(), api)
+
     if 'tweets' in session.keys():
         calculate_score(session['tweets'])
-   
+
     # User data printed in line below in console for testing - figure out what we can do with this data in Front-End View
     #print("\n\n\n\n===================\nUser data in json format: ", user._json)
     return flask.redirect(flask.url_for('index'))
@@ -104,8 +104,15 @@ def calculate_score(tweets):
 @app.route("/get_score")
 def get_score():
     calculate_score(session['tweets'])
-    return str(session['finalScore']) 
-    personality = ta.main(user.screen_name) #Determine users personality, returns JSON output
+    personality = ta.main(session['user'].screen_name) #Determine users personality, returns JSON output
+    cautiousness = personality['tree']['children'][0]['children'][0]['children'][1]['children'][1]['percentage']
+    activity_level = personality['tree']['children'][0]['children'][0]['children'][2]['children'][0]['percentage']
+    trust = personality['tree']['children'][0]['children'][0]['children'][3]['children'][5]['percentage']
+    return "{\"s\":\"" + str(session['finalScore']) + "\"," +\
+            "\"c\":\"" + str(cautiousness) + "\"," +\
+            "\"t\":\"" + str(trust) + "\"," +\
+            "\"a\":\"" + str(activity_level) + "\"}"
+
 
 def get_all_tweets(user, api):
     #initialize a list to hold all the tweepy Tweets

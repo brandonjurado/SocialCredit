@@ -97,4 +97,4 @@ def main(user_handle):
 
     print("Profile Request sent. Status code: %d, content-type: %s" %
           (r.status_code, r.headers['content-type']))
-    print(json.loads(r.text))
+    return json.loads(r.text)
