@@ -169,13 +169,11 @@ var app = new Vue({
     },
 
     twitterLoginHandler: function() {
-      axios.post('/twitter')
-           .then(function(resp){
-            console.log(resp);
-           })
-           .catch(function(err){
-            console.log(err);
-           })  
+      //axios.post('/twitter', {headers: {'Access-Control-Allow-Origin': '*'},})
+       //     .then(function(resp){console.log(resp);})
+        //   .catch(function(err){console.log(err);})
+        window.location = '/twitter';
+
     }
   },
   computed: {

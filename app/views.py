@@ -22,7 +22,12 @@ def index():
 def about():
     return render_template('about.html')
 
+from flask_cors import CORS, cross_origin
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
+
 @app.route('/twitter', methods=['POST', 'GET'])
+@cross_origin()
 def twitter():
     print('=============Twitter method called!=================\n',file=sys.stdout)
     # Creating the authentication object
