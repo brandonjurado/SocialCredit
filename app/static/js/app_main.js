@@ -55,14 +55,14 @@ Vue.component('app-body',{
           </div>
           <div class="col-md-5">
             <div class="slanted">
-              <traits-pane></traits-pane>
+              <traits-pane v-bind:data="data"></traits-pane>
             </div>
           </div>
         </div>
       </div>
     </div>
   `,
-  props: ['progressValue'],
+  props: ['data','progressValue'],
   methods:
   {
     calculate: function() {
@@ -80,10 +80,12 @@ Vue.component('top-level', {
                v-on:tbloginevent="doTbLogin">
      </menu-bar>
      <app-body v-bind:progressValue='60'
+               v-bind:data='data'
                v-on:calculateevent="doCalculate">
      </app-body>
    </div>
   `,
+  props: ['data'],
   methods: {
     doFbLogin: function() {
       this.$emit('dofbloginevent');
@@ -102,24 +104,35 @@ Vue.component('top-level', {
 
 
 Vue.component('traits-pane', {
-  props:['bars', 'traits'],
+  props:['data', 'bars', 'traits'],
   template:`
     <div class="traits-pane">
       <ul>
-        <li v-for="for (bar, idx) in bars" class="trait">
-          <div class="progress-container-{{ idx }}"></div>
-          <div class="trait-value"></div>
+        <li class="trait">
+          <p>Cautiousness. Lvl</p>
+          <div class="prog-wrapper">
+            <div class="prog" id="progress-container-1"></div>
+            <div class="trait-value">{{ Math.floor(data.c * 100) }}<b> %</b></div>
+          </div>
+        </li>
+        <li class="trait">
+          <p>Trust. Lvl</p>
+          <div class="prog-wrapper">
+            <div class="prog" id="progress-container-2"></div>
+            <div class="trait-value">{{ Math.floor(data.t * 100) }}<b> %</b></div>
+          </div>
+        </li>
+        <li class="trait">
+          <p>Activity. Lvl</p>
+          <div class="prog-wrapper">
+            <div class="prog" id="progress-container-3"></div>
+            <div class="trait-value">{{ Math.floor(data.a * 100) }}<b> %</b></div>
+          </div>
         </li>
       </ul>
       <div class="acknowledgements"></div>
     </div>
-  `,
-  methods: {
-    initBars: function() {
-      var bar = new ProgressBar.Line('#container', {easing: 'easeInOut'});
-      bar.animate(1);
-    }
-  }
+  `
 });
 
 // Entry point of vue app
@@ -149,6 +162,18 @@ var app = new Vue({
     //sc = parseFloat(sc);
     console.log('Sc is parsed to float: ', typeof(sc), sc);
 
+        var style = {
+          strokeWidth: 10.5,
+          easing: 'easeInOut',
+          duration: 1400,
+          color: '#444',
+          trailColor: '#999',
+          trailWidth: 10.5,
+        }
+      var bar1 = new ProgressBar.Line('#progress-container-1', style);
+      var bar2 = new ProgressBar.Line('#progress-container-2', style);
+      var bar3 = new ProgressBar.Line('#progress-container-3', style);
+
     $('#circle').circleProgress({
       value: parseFloat(sc),
       size: 400,
@@ -156,10 +181,15 @@ var app = new Vue({
     }).on('circle-animation-progress', function(event, v) {
         console.log('Type of sc 3: ', typeof(sc));
         sc = self.data['s']
+        
         console.log('After: ', typeof(sc), ' sc: ', sc)
         var obj = $(this).data('circle-progress'),
             ctx = obj.ctx,
             s = obj.size;
+
+        bar1.animate(self.data['c']);
+        bar2.animate(self.data['t']);
+        bar3.animate(self.data['a']);
 
         //console.log("progress value: "+v);
         var sv = Math.floor(sc * v * 100);
@@ -173,7 +203,12 @@ var app = new Vue({
         ctx.fillStyle = fill;
         ctx.fillText(sv + "%", s / 2, s / 2);
         ctx.restore();
+
     });
+
+    bar1.animate(this.data['c']);
+    bar2.animate(this.data['t']);
+    bar3.animate(this.data['a']);
 
     this.$nextTick(function(){
       console.log('logging in to facebook');

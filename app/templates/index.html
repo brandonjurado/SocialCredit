@@ -3,8 +3,10 @@
         <title>Credit</title>
         <!-- scripts -->
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>    
+        <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="{{ url_for('static', filename='js/progressbar.min.js') }}"></script>
+
         <!-- stylesheets -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
@@ -15,9 +17,10 @@
         <div id="fb-root"></div>
         <div id="app">
             <name-form v-if="showNameForm"></name-form>
-            <top-level v-on:dofbloginevent="facebookLoginHandler" 
+            <top-level v-on:dofbloginevent="facebookLoginHandler"
                        v-on:dotbloginevent="twitterLoginHandler"
                        v-on:docalculateevent="calculate"
+                       v-bind:data="data"
                        v-on:circle-animation-start="animateProgressBar">
             </top-level>
      <!--        <form action="/twitter" method="post">
@@ -50,7 +53,7 @@
         //         console.log(response);
         //     });
 
-        //     }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
+        //     }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});
         // }
 
         // function logout() {
@@ -64,15 +67,14 @@
         // console.log(status);
 
         </script>
-<!-- 
+<!--
         <button onclick="javascript:login();">Login Facebook</button>
         <br>
-        <button onclick="javascript:logout();">Logout from Facebook</button>    
+        <button onclick="javascript:logout();">Logout from Facebook</button>
  -->        </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='js/circle-progress.min.js') }} "></script>
     <script src="{{ url_for('static', filename='js/build/main.bundle.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/progressbar.min.js') }}"></script>
-    
+
 </html>
