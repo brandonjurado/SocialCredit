@@ -1,10 +1,12 @@
-# hackUTD
-Determine credibility of user's likeliness to repay short-term loans with use of machine-learning algorithms.
+# Social Credit
+Determine credibility of user's likeliness to repay short-term loans with use of machine-learning algorithms and represent the data with visual graphs.
 
 # Setup
-Run `sh build.sh` to get the server started.
+Run `npm install` in the directory: `app/static/js`.
 
-Run `npm install` in the directory: `app/static/js`
+Run `npm run webpack` to compile our JavaScript modules.
+
+Start the server with `sh build.sh`, running alongside webpack.
 
 *server.py.bak exists as a backup file in case of error*
 

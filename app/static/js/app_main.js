@@ -11,7 +11,7 @@ Vue.component('menu-bar', {
   `
   <div class="menu-bar">
     <div class="banner">
-      <a href="#">Credio</a>
+      <a href="#" class="banner-logo"><img src='/static/img/social_credit.png' height="100"></a>
     </div>
     <div class="social-media">
       <div class="social-media-wrapper">
@@ -181,7 +181,7 @@ var app = new Vue({
     }).on('circle-animation-progress', function(event, v) {
         console.log('Type of sc 3: ', typeof(sc));
         sc = self.data['s']
-        
+
         console.log('After: ', typeof(sc), ' sc: ', sc)
         var obj = $(this).data('circle-progress'),
             ctx = obj.ctx,
