@@ -6,13 +6,42 @@ import flask
 import sys
 
 #Variables that contains the user credentials to access Twitter API
-access_token = ""
-access_token_secret = ""
-consumer_key = ""
-consumer_secret = ""
+access_token = "136402168-5ytEveDaVtc9UBU0jWbuL8M4I69IXiNTsmgYKczE"
+access_token_secret = "CGS2XkVPEWASS9eqjA8Rf9sWeR6uH26GAxVfsQud9zG2v"
+consumer_key = "ejU5ZdF4lx1MIQ2z5NBpFroes"
+consumer_secret = "LWxNpU7wqTpdVoVLecZjYZlorsgyvcTV4iMF0WeDDC0kJelpFu"
 session = dict()
 db = dict()
 callback_url = 'http://127.0.0.1:5000/verify'
+
+def get_tweets(username):
+         
+        # Authorization to consumer key and consumer secret
+        auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+ 
+        # Access to user's access key and access secret
+        auth.set_access_token(access_token, access_token_secret)
+ 
+        # Calling api
+        api = tweepy.API(auth)
+ 
+        # 200 tweets to be extracted
+        number_of_tweets=200
+        tweets = api.user_timeline(screen_name=username)
+ 
+        # Empty Array
+        tmp=[] 
+ 
+        # create array of tweet information: username, 
+        # tweet id, date/time, text
+        tweets_for_csv = [tweet.text for tweet in tweets] # CSV file created 
+        for j in tweets_for_csv:
+ 
+            # Appending tweets to the empty array tmp
+            tmp.append(j) 
+ 
+        # Printing the tweets
+        print(tmp)
 
 @app.route('/')
 def index():
@@ -60,7 +89,8 @@ def get_verification():
     tweets = get_all_tweets(user, api)
     #print("\n\n\n\n===================\nTweets: ", tweets)
     # User data printed in line below in console for testing - figure out what we can do with this data in Front-End View
-    #print("\n\n\n\n===================\nUser data in json format: ", user._json)
+    print("\n\n\n\n===================\nUser data in json format: ", user._json)
+    get_tweets(user)
     #store in a db
     db['api']=api
     db['access_token_key']=auth.request_token['oauth_token']
