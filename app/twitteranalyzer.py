@@ -1,7 +1,7 @@
 #!/usr/bin/env python
+from __future__ import print_function
+def main(user_handle):
 
-    def main():
-    from __future__ import print_function
     import sys
     import requests
     import json
@@ -17,13 +17,12 @@
             'contenttype': 'text/plain',
             'language': s.lang,
             'content': s.text,
-            'created': s.created_at_in_seconds,
             'reply': (s.in_reply_to_status_id is None),
             'forward': False
         }
 
 
-    handle = sys.argv[1]
+    handle = user_handle
 
     # Twitter Credentials
     #
@@ -72,6 +71,7 @@
             statuses.append(status)
 
     print ('Number of Tweets user have: %s' % str(len(statuses)))
+    print ('Screen name: ', handle)
 
     pi_content_items_array = map(convert_status_to_pi_content_item, statuses)
     pi_content_items = {'contentItems': pi_content_items_array}
