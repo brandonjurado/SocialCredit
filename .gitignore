@@ -1,4 +1,7 @@
 __pycache__/
 app/static/js/node_modules/
 app/static/js/build/
+app/__init__.pyc
+app/views.pyc
+config.pyc
 run.pyc
