@@ -5,6 +5,8 @@ from flask import Flask, redirect, url_for, session, request, render_template, f
 import flask
 import sys
 from textblob import TextBlob
+#from flask import session
+
 
 #Variables that contains the user credentials to access Twitter API
 access_token = "136402168-5ytEveDaVtc9UBU0jWbuL8M4I69IXiNTsmgYKczE"
@@ -43,7 +45,6 @@ def twitter():
     #this is twitter's url for authentication
     return flask.redirect(redirect_url)
 
-finalScore = 0
 
 @app.route("/verify")
 def get_verification():
@@ -66,8 +67,21 @@ def get_verification():
     # Get and store authenticated users information in 'user' var
     #user = api.get_user('kayhart_')
     user = api.me()
-    tweets = get_all_tweets(user, api)
-    #print("\n\n\n\n===================\nTweets: ", tweets)
+    session['tweets'] = get_all_tweets(user, api)
+    
+    if 'tweets' in session.keys():
+        calculate_score(session['tweets'])
+   
+    # User data printed in line below in console for testing - figure out what we can do with this data in Front-End View
+    #print("\n\n\n\n===================\nUser data in json format: ", user._json)
+    #store in a db
+    #db['api']=api
+    #db['access_token_key']=auth.request_token['oauth_token']
+    #db['access_token_secret']=auth.request_token['oauth_token_secret']
+    return flask.redirect(flask.url_for('index'))
+
+def calculate_score(tweets):
+    # #print("\n\n\n\n===================\nTweets: ", tweets)
     positive = 0
     negative = 0
     neutral = 0
@@ -80,26 +94,18 @@ def get_verification():
     for sentence in blob.sentences:
         runningScore += sentence.sentiment.polarity
         count += 1
-        if sentence.sentiment.polarity < 0:
-            negative += 1
-        elif sentence.sentiment.polarity >0:
-            positive += 1
-        else:
-            neutral += 1
+        if sentence.sentiment.polarity < 0: negative += 1
+        elif sentence.sentiment.polarity >0: positive += 1
+        else: neutral += 1
     interScore = (positive/negative) * (runningScore/count)
-    finalScore = 1 - (interScore)/2
-    print (positive, neutral, negative, runningScore, interScore, finalScore)
-    # User data printed in line below in console for testing - figure out what we can do with this data in Front-End View
-    #print("\n\n\n\n===================\nUser data in json format: ", user._json)
-    #store in a db
-    db['api']=api
-    db['access_token_key']=auth.request_token['oauth_token']
-    db['access_token_secret']=auth.request_token['oauth_token_secret']
-    return flask.redirect(flask.url_for('index'))
+    session['finalScore'] = 1 - (interScore)/2
+    print (positive, neutral, negative, runningScore, interScore, session['finalScore'])
+
 
 @app.route("/get_score")
 def get_score():
-    return finalScore
+    calculate_score(session['tweets'])
+    return str(session['finalScore']) 
 
 def get_all_tweets(user, api):
     #initialize a list to hold all the tweepy Tweets

@@ -75,10 +75,11 @@ Vue.component('top-level', {
   template: 
   `<div class="content-wrapper">
      <menu-bar v-on:fbloginevent="doFbLogin" 
-               v-on:tbloginevent="doTbLogin"
-               v-on:calculateevent="doCalculate">
+               v-on:tbloginevent="doTbLogin">
      </menu-bar>
-     <app-body v-bind:progressValue='60'></app-body>
+     <app-body v-bind:progressValue='60'
+               v-on:calculateevent="doCalculate">
+     </app-body>
    </div>
   `,
   methods: {
@@ -113,18 +114,21 @@ var app = new Vue({
   },
   mounted: function () {
     console.log('mounted... called');
-  
+    var self = this;
+    let sc = self.score;
+
     $('#circle').circleProgress({
-      value: 0.5,
+      value: sc,
       size: 400,
       thickness: 70,
     }).on('circle-animation-progress', function(event, v) {
+        sc = self.score;
         var obj = $(this).data('circle-progress'),
             ctx = obj.ctx,
             s = obj.size;
 
         //console.log("progress value: "+v);
-        var sv = ( v * 100);
+        var sv = Math.floor(sc * v * 100);
         console.log("SV: " +  sv);
         var fill = obj.arcFill;
 
@@ -143,13 +147,18 @@ var app = new Vue({
     });
   },
   methods: {
+    animateProgressBar: function() {
+      console.log("animate handler called");
+
+    },
     calculate: function() {
-      axios.post('/get_score')
+      axios.get('/get_score')
             .then((resp) => {
-              //this.score = resp;
+              this.score = resp.data;
               console.log(resp);
+              $('#circle').circleProgress('value', this.score);
             })
-           .catch(function(err){console.log(err);})
+           .catch(function(err){console.log(err);});
     },
 
     /// Prelude for facebook api.
