@@ -45,7 +45,7 @@ Vue.component('app-body',{
     <div class="app-body">
       <div class="container-fluid">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-7 left">
             <div class="score-progress">
               <div id="circle"></div>
             <div class="score-info">
@@ -53,8 +53,10 @@ Vue.component('app-body',{
             </div>
             </div>
           </div>
-          <div class="col-md-6">
-
+          <div class="col-md-5">
+            <div class="slanted">
+              <traits-pane></traits-pane>
+            </div>
           </div>
         </div>
       </div>
@@ -98,6 +100,28 @@ Vue.component('top-level', {
   }
 });
 
+
+Vue.component('traits-pane', {
+  props:['bars', 'traits'],
+  template:`
+    <div class="traits-pane">
+      <ul>
+        <li v-for="for (bar, idx) in bars" class="trait">
+          <div class="progress-container-{{ idx }}"></div>
+          <div class="trait-value"></div>
+        </li>
+      </ul>
+      <div class="acknowledgements"></div>
+    </div>
+  `,
+  methods: {
+    initBars: function() {
+      var bar = new ProgressBar.Line('#container', {easing: 'easeInOut'});
+      bar.animate(1);
+    }
+  }
+});
+
 // Entry point of vue app
 var app = new Vue({
   el: '#app',
@@ -133,11 +157,11 @@ var app = new Vue({
         var fill = obj.arcFill;
 
         ctx.save();
-        ctx.font = "bold " + s / 3.5 + "px sans-serif";
+        ctx.font = "bold " + s / 4.5 + "px sans-serif";
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.fillStyle = fill;
-        ctx.fillText(sv, s / 2, s / 2);
+        ctx.fillText(sv + "%", s / 2, s / 2);
         ctx.restore();
     });
 
