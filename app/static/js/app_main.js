@@ -1,12 +1,12 @@
 /****
-Sorry can't separate components into different files because of 
+Sorry can't separate components into different files because of
 web development complexities (aka javascript nonesense)
 ****/
 
-// Name form - A component for having users tell 
+// Name form - A component for having users tell
 // the app their name.
 Vue.component('name-form', {
-   template: 
+   template:
     `<div class='fullscreen name-form'></div>`
 });
 
@@ -14,7 +14,6 @@ Vue.component('name-form', {
 Vue.component('social-media-bar', {
   template:
   `
-  <button>Click</button> 
   <nav class="social-media-bar navbar navbar-light bg-light">
     <a class="credio-icon navbar-brand" href="#">
       <img src="/img/credio.svg" width="30" height="30" class="d-inline-block align-top" alt="">Credio
@@ -42,8 +41,9 @@ Vue.component('social-media-bar', {
 
 // Contains top level div
 Vue.component('top-level', {
-  template: 
+  template:
   `<social-media-bar></social-media-bar>
+  <button v-click='calculate'>Calc</button>
   `
 });
 
@@ -58,6 +58,7 @@ var app = new Vue({
         twitterUrl:  '',
         facebookUrl: '',
     },
+    results:{}
   },
   methods: {
     calculate: function() {
