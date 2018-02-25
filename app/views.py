@@ -3,8 +3,6 @@ from app import app
 import tweepy
 from flask import Flask, redirect, url_for, session, request, render_template, flash
 import flask
-
-
 import sys
 
 #Variables that contains the user credentials to access Twitter API
@@ -59,6 +57,8 @@ def get_verification():
     api = tweepy.API(auth)
     # Get and store authenticated users information in 'user' var
     user = api.me()
+    tweets = get_all_tweets(user, api)
+    #print("\n\n\n\n===================\nTweets: ", tweets)
     # User data printed in line below in console for testing - figure out what we can do with this data in Front-End View
     #print("\n\n\n\n===================\nUser data in json format: ", user._json)
     #store in a db
@@ -66,3 +66,33 @@ def get_verification():
     db['access_token_key']=auth.request_token['oauth_token']
     db['access_token_secret']=auth.request_token['oauth_token_secret']
     return flask.redirect(flask.url_for('index'))
+
+def get_all_tweets(user, api):
+        #initialize a list to hold all the tweepy Tweets
+    	alltweets = []
+        screen_name = user.screen_name
+        new_tweets = api.user_timeline(screen_name = screen_name,count=200)
+        #save most recent tweets
+    	alltweets.extend(new_tweets)
+
+    	#save the id of the oldest tweet less one
+    	oldest = alltweets[-1].id - 1
+
+    	#keep grabbing tweets until there are no tweets left to grab
+    	while len(new_tweets) > 0:
+    		print("getting tweets before %s" % (oldest))
+
+    		#all subsiquent requests use the max_id param to prevent duplicates
+    		new_tweets = api.user_timeline(screen_name = screen_name,count=200,max_id=oldest)
+
+    		#save most recent tweets
+    		alltweets.extend(new_tweets)
+
+    		#update the id of the oldest tweet less one
+    		oldest = alltweets[-1].id - 1
+
+    		print("...%s tweets downloaded so far" % (len(alltweets)))
+
+    	#transform the tweepy tweets into a 2D array that will populate the csv
+        outtweets = [[tweet.id_str, tweet.created_at, tweet.text.encode("utf-8")] for tweet in alltweets]
+        return outtweets
