@@ -1,8 +1,11 @@
 <html lang=en>
     <head>
         <title>Credit</title>
+        <!-- scripts -->
         <script src="https://cdn.jsdelivr.net/npm/vue"></script>
         <script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>    
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <!-- stylesheets -->
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />
         <link rel="stylesheet" href="https://s3.amazonaws.com/icomoon.io/114779/Socicon/style.css?u8vidh">
@@ -15,11 +18,11 @@
             <top-level v-on:dofbloginevent="facebookLoginHandler" 
                        v-on:dotbloginevent="twitterLoginHandler">
             </top-level>
-            <form action="/twitter" method="post">
+     <!--        <form action="/twitter" method="post">
                 <button class="btn btn-primary" type="submit">Twitter</button>
             </form>
             <div id="fb-root"></div>
-
+ -->
         <script>
         // FB.init({
         //     appId      : '197420487525406',

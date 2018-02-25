@@ -130,9 +130,10 @@ var app = new Vue({
     });
   },
   methods: {
-    calculate: function() {
+    calculate: function() {},
 
-    },
+    /// Prelude for facebook api.
+    /// Handles Loading of face book api.
     loadFacebookApi: function() {
       FB.init({
         appId      : '197420487525406',
@@ -154,6 +155,7 @@ var app = new Vue({
       console.log('facebook login status: '+status);
     },
 
+    /// Handles facebook logins for user.
     facebookLoginHandler: function() {
       console.log("Real fb login running...");
       FB.login(function(response) {
@@ -167,8 +169,13 @@ var app = new Vue({
     },
 
     twitterLoginHandler: function() {
-      console.log("Real tb login running...");
-  
+      axios.get('/twitter')
+           .then(function(resp){
+            console.log(resp);
+           })
+           .catch(function(err){
+            console.log(err);
+           })  
     }
   },
   computed: {
