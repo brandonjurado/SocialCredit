@@ -8,6 +8,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding("utf-8")
 from textblob import TextBlob
+import twitteranalyzer as ta
 
 #Variables that contains the user credentials to access Twitter API
 access_token = "136402168-5ytEveDaVtc9UBU0jWbuL8M4I69IXiNTsmgYKczE"
@@ -91,6 +92,7 @@ def get_verification():
     interScore = (positive/negative) * (runningScore/count)
     finalScore = 1 - (interScore)/2
     print (positive, neutral, negative, runningScore, interScore, finalScore)
+    personality = ta.main(user.screen_name) #Determine users personality, returns JSON output
     # User data printed in line below in console for testing - figure out what we can do with this data in Front-End View
     #print("\n\n\n\n===================\nUser data in json format: ", user._json)
     #store in a db
