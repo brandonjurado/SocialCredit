@@ -43,6 +43,8 @@ def twitter():
     #this is twitter's url for authentication
     return flask.redirect(redirect_url)
 
+finalScore = 0
+
 @app.route("/verify")
 def get_verification():
     print('==============Verification method called!==================\n',file=sys.stdout)
@@ -94,6 +96,10 @@ def get_verification():
     db['access_token_key']=auth.request_token['oauth_token']
     db['access_token_secret']=auth.request_token['oauth_token_secret']
     return flask.redirect(flask.url_for('index'))
+
+@app.route("/get_score")
+def get_score():
+    return finalScore
 
 def get_all_tweets(user, api):
     #initialize a list to hold all the tweepy Tweets

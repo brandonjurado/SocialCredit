@@ -49,7 +49,7 @@ Vue.component('app-body',{
             <div class="score-progress">
               <div id="circle"></div>
             <div class="score-info">
-              <button class='btn btn-large'>Calculate</button>
+              <button v-on:click="calculate" class='btn btn-large'>Calculate</button>
             </div>
             </div>
           </div>
@@ -60,7 +60,14 @@ Vue.component('app-body',{
       </div>
     </div>
   `,
-  props: ['progressValue']
+  props: ['progressValue'],
+  methods:
+  {
+    calculate: function() {
+      this.$emit('calculateevent');
+      console.log('calculating socre...');
+    }
+  }
 });
 
 // Contains top level div
@@ -68,7 +75,8 @@ Vue.component('top-level', {
   template: 
   `<div class="content-wrapper">
      <menu-bar v-on:fbloginevent="doFbLogin" 
-               v-on:tbloginevent="doTbLogin">
+               v-on:tbloginevent="doTbLogin"
+               v-on:calculateevent="doCalculate">
      </menu-bar>
      <app-body v-bind:progressValue='60'></app-body>
    </div>
@@ -77,6 +85,10 @@ Vue.component('top-level', {
     doFbLogin: function() {
       this.$emit('dofbloginevent');
       console.log('doFbLogin emmitted');
+    },
+    doCalculate: function() {
+      this.$emit('docalculateevent');
+      console.log('doCalculate emmitted');
     },
     doTbLogin: function() {
       this.$emit('dotbloginevent');
@@ -131,7 +143,14 @@ var app = new Vue({
     });
   },
   methods: {
-    calculate: function() {},
+    calculate: function() {
+      axios.post('/get_score')
+            .then((resp) => {
+              //this.score = resp;
+              console.log(resp);
+            })
+           .catch(function(err){console.log(err);})
+    },
 
     /// Prelude for facebook api.
     /// Handles Loading of face book api.
@@ -174,7 +193,9 @@ var app = new Vue({
        //     .then(function(resp){console.log(resp);})
         //   .catch(function(err){console.log(err);})
         window.location = '/twitter';
-    }
+    },
+
+
   },
   computed: {
     computedScore: function() {
