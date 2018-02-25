@@ -12,57 +12,55 @@
         <div id="fb-root"></div>
         <div id="app">
             <name-form v-if="showNameForm"></name-form>
-            <top-level></top-level>
+            <top-level v-on:dofblogin="facebookLoginHandler"></top-level>
             <form action="/twitter" method="post">
                 <button class="btn btn-primary" type="submit">Twitter</button>
             </form>
             <div id="fb-root"></div>
 
         <script>
-        FB.init({
-    appId      : '197420487525406',
-    status     : true,
-    xfbml      : true,
-    version    : 'v2.7' // or v2.6, v2.5, v2.4, v2.3
-  });
+        // FB.init({
+        //     appId      : '197420487525406',
+        //     status     : true,
+        //     xfbml      : true,
+        //     version    : 'v2.7' // or v2.6, v2.5, v2.4, v2.3
+        //   });
 
-        // Load the SDK asynchronously
-        (function(d){
-        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement('script'); js.id = id; js.async = true;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        ref.parentNode.insertBefore(js, ref);
-        }(document));
+        // // Load the SDK asynchronously
+        // (function(d){
+        // var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        // if (d.getElementById(id)) {return;}
+        // js = d.createElement('script'); js.id = id; js.async = true;
+        // js.src = "//connect.facebook.net/en_US/all.js";
+        // ref.parentNode.insertBefore(js, ref);
+        // }(document));
 
-        function login() {
-            FB.login(function(response) {
+        // function login() {
+        //     FB.login(function(response) {
 
-            // handle the response
-            FB.api('/1695668353825295', function(response) {
-                console.log(response);
-            });
+        //     // handle the response
+        //     FB.api('/1695668353825295', function(response) {
+        //         console.log(response);
+        //     });
 
-            }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
-        }
+        //     }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
+        // }
 
-        function logout() {
-            FB.logout(function(response) {
-              // user is now logged out
-            });
-        }
+        // function logout() {
+        //     FB.logout(function(response) {
+        //       // user is now logged out
+        //     });
+        // }
 
-        var status = FB.getLoginStatus();
+        // var status = FB.getLoginStatus();
 
-        console.log(status);
+        // console.log(status);
 
         </script>
 
         <button onclick="javascript:login();">Login Facebook</button>
-
         <br>
-
-<button onclick="javascript:logout();">Logout from Facebook</button>    
+        <button onclick="javascript:logout();">Logout from Facebook</button>    
         </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>

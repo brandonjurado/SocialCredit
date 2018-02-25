@@ -15,7 +15,7 @@ Vue.component('menu-bar', {
     </div>
     <div class="social-media">
       <div class="social-media-wrapper">
-        <a class="social-media-btn fb-btn">
+        <a class="social-media-btn fb-btn" v-on:click="login">
           <i class="fa fa-facebook-f"></i>
         </a>
         <a class="social-media-btn tw-btn">
@@ -27,7 +27,13 @@ Vue.component('menu-bar', {
       </div>
     </div>
   </div>
-  `
+  `,
+  methods: {
+    login: function() {
+      this.$emit('login');
+      console.log('login emitted...');
+    }
+  }
 });
 
 Vue.component('app-body',{
@@ -57,10 +63,16 @@ Vue.component('app-body',{
 Vue.component('top-level', {
   template: 
   `<div class="content-wrapper">
-     <menu-bar></menu-bar>
+     <menu-bar v-on:login="doLogin"></menu-bar>
      <app-body v-bind:progressValue='60'></app-body>
    </div>
-  `
+  `,
+  methods: {
+    doLogin: function() {
+      this.$emit('dofblogin');
+      console.log('doFbLogin emmitted');
+    }
+  }
 });
 
 // Entry point of vue app
@@ -101,10 +113,47 @@ var app = new Vue({
         ctx.fillText(sv, s / 2, s / 2);
         ctx.restore();
     });
+
+    this.$nextTick(function(){
+      console.log('logging in to facebook');
+      this.loadFacebookApi();
+    });
   },
   methods: {
     calculate: function() {
 
+    },
+    loadFacebookApi: function() {
+      FB.init({
+        appId      : '197420487525406',
+        status     : true,
+        xfbml      : true,
+        version    : 'v2.7' // or v2.6, v2.5, v2.4, v2.3
+      });
+       
+      // Load the SDK asynchronously
+      (function(d) {
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+      }(document));
+
+      var status = FB.getLoginStatus();
+      console.log('facebook login status: '+status);
+    },
+
+    facebookLoginHandler: function() {
+      console.log("real login...");
+      FB.login(function(response) {
+
+      // handle the response
+      FB.api('/1695668353825295', function(response) {
+        console.log(response);
+      });
+
+      }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
     }
   },
   computed: {
