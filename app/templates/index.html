@@ -12,7 +12,9 @@
         <div id="fb-root"></div>
         <div id="app">
             <name-form v-if="showNameForm"></name-form>
-            <top-level v-on:dofblogin="facebookLoginHandler"></top-level>
+            <top-level v-on:dofbloginevent="facebookLoginHandler" 
+                       v-on:dotbloginevent="twitterLoginHandler">
+            </top-level>
             <form action="/twitter" method="post">
                 <button class="btn btn-primary" type="submit">Twitter</button>
             </form>

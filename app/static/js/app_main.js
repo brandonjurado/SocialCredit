@@ -15,10 +15,10 @@ Vue.component('menu-bar', {
     </div>
     <div class="social-media">
       <div class="social-media-wrapper">
-        <a class="social-media-btn fb-btn" v-on:click="login">
+        <a class="social-media-btn fb-btn" v-on:click="fbLogin">
           <i class="fa fa-facebook-f"></i>
         </a>
-        <a class="social-media-btn tw-btn">
+        <a class="social-media-btn tw-btn" v-on:click="tbLogin">
           <i class="fa fa-twitter"></i>
         </a>
         <a class="social-media-btn ab-btn right-align">
@@ -29,9 +29,13 @@ Vue.component('menu-bar', {
   </div>
   `,
   methods: {
-    login: function() {
-      this.$emit('login');
-      console.log('login emitted...');
+    fbLogin: function() {
+      this.$emit('fbloginevent');
+      console.log('doing fb login. Event emiited...');
+    },
+    tbLogin: function() {
+      this.$emit('tbloginevent');
+      console.log('doing tb login. Event emiited...');  
     }
   }
 });
@@ -63,14 +67,20 @@ Vue.component('app-body',{
 Vue.component('top-level', {
   template: 
   `<div class="content-wrapper">
-     <menu-bar v-on:login="doLogin"></menu-bar>
+     <menu-bar v-on:fbloginevent="doFbLogin" 
+               v-on:tbloginevent="doTbLogin">
+     </menu-bar>
      <app-body v-bind:progressValue='60'></app-body>
    </div>
   `,
   methods: {
-    doLogin: function() {
-      this.$emit('dofblogin');
+    doFbLogin: function() {
+      this.$emit('dofbloginevent');
       console.log('doFbLogin emmitted');
+    },
+    doTbLogin: function() {
+      this.$emit('dotbloginevent');
+      console.log('doTbLogin emitted');
     }
   }
 });
@@ -145,7 +155,7 @@ var app = new Vue({
     },
 
     facebookLoginHandler: function() {
-      console.log("real login...");
+      console.log("Real fb login running...");
       FB.login(function(response) {
 
       // handle the response
@@ -154,6 +164,11 @@ var app = new Vue({
       });
 
       }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
+    },
+
+    twitterLoginHandler: function() {
+      console.log("Real tb login running...");
+  
     }
   },
   computed: {
