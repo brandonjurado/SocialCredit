@@ -1,18 +1,19 @@
 {
-    "name": "vue-frontend-hackutd",
-    "version": "1.0.0",
-    "scripts": {
-        "babel": "babel --presets es2015 app_main.js -o build/app.bundle.js",
-        "webpack": "webpack"
-    },
-    "devDependencies": {
-        "babel-core": "^6.26.0",
-        "babel-loader": "^7.1.2",
-        "babel-preset-es2015": "^6.24.1",
-        "babel-preset-stage-2": "^6.24.1"
-    },
-    "dependencies": {
-        "vue": "^2.5.13",
-        "vue2": "^1.0.0"
-    }
+  "name": "vue-frontend-hackutd",
+  "version": "1.0.0",
+  "scripts": {
+    "babel": "babel --presets es2015 app_main.js -o build/app.bundle.js",
+    "webpack": "webpack"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "webpack": "^3.11.0"
+  },
+  "dependencies": {
+    "vue": "^2.5.13",
+    "vue2": "^1.0.0"
+  }
 }
