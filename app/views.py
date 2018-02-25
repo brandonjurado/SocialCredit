@@ -4,6 +4,7 @@ import tweepy
 from flask import Flask, redirect, url_for, session, request, render_template, flash
 import flask
 import sys
+from textblob import TextBlob
 
 #Variables that contains the user credentials to access Twitter API
 access_token = "136402168-5ytEveDaVtc9UBU0jWbuL8M4I69IXiNTsmgYKczE"
@@ -61,9 +62,31 @@ def get_verification():
     #now you have access!
     api = tweepy.API(auth)
     # Get and store authenticated users information in 'user' var
+    #user = api.get_user('kayhart_')
     user = api.me()
     tweets = get_all_tweets(user, api)
     #print("\n\n\n\n===================\nTweets: ", tweets)
+    positive = 0
+    negative = 0
+    neutral = 0
+    runningScore = 0
+    count = 0
+    parseBlob = ''
+    for i in range(len(tweets)):
+        parseBlob += str(tweets[i][2])
+    blob = TextBlob(parseBlob)
+    for sentence in blob.sentences:
+        runningScore += sentence.sentiment.polarity
+        count += 1
+        if sentence.sentiment.polarity < 0:
+            negative += 1
+        elif sentence.sentiment.polarity >0:
+            positive += 1
+        else:
+            neutral += 1
+    interScore = (positive/negative) * (runningScore/count)
+    finalScore = 1 - (interScore)/2
+    print (positive, neutral, negative, runningScore, interScore, finalScore)
     # User data printed in line below in console for testing - figure out what we can do with this data in Front-End View
     #print("\n\n\n\n===================\nUser data in json format: ", user._json)
     #store in a db
