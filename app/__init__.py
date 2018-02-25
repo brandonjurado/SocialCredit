@@ -1,4 +1,4 @@
-from flask import flasklask
+from flask import Flask
 
 # Initialize the flask app
 app = Flask(__name__, instance_relative_config=True)

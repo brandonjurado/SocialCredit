@@ -1,8 +1,14 @@
 <html lang=en>
     <head>
-        <title>Credit Whore!</title>
+        <title>Credit.</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" />
     </head>
     <body>
-        
+        <div id="app">
+            <name-form v-if="showNameForm"></name-form>
+            <top-level></top-level>
+        </div>
     </body>
+    <script src="{{ url_for('static', filename='js/build/main.bundle.js') }}"></script>
 </html>
