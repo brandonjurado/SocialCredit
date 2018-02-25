@@ -8,7 +8,7 @@ Vue.component('name-form', {
 // Contains about button too.
 Vue.component('menu-bar', {
   template:
-  ` 
+  `
   <div class="menu-bar">
     <div class="banner">
       <a href="#">Credio</a>
@@ -35,7 +35,7 @@ Vue.component('menu-bar', {
     },
     tbLogin: function() {
       this.$emit('tbloginevent');
-      console.log('doing tb login. Event emiited...');  
+      console.log('doing tb login. Event emiited...');
     }
   }
 });
@@ -74,9 +74,9 @@ Vue.component('app-body',{
 
 // Contains top level div
 Vue.component('top-level', {
-  template: 
+  template:
   `<div class="content-wrapper">
-     <menu-bar v-on:fbloginevent="doFbLogin" 
+     <menu-bar v-on:fbloginevent="doFbLogin"
                v-on:tbloginevent="doTbLogin">
      </menu-bar>
      <app-body v-bind:progressValue='60'
@@ -127,7 +127,12 @@ var app = new Vue({
   el: '#app',
   data: {
     showNameForm: false,
-    score:0,
+    data:{
+      s:0,
+      c: 0,
+      a:0,
+      t:0
+    },
     user: {
         fullname:    '',
         lastname:    '',
@@ -139,14 +144,19 @@ var app = new Vue({
   mounted: function () {
     console.log('mounted... called');
     var self = this;
-    let sc = self.score;
+    console.log(this);
+    let sc = this.data['s'];
+    //sc = parseFloat(sc);
+    console.log('Sc is parsed to float: ', typeof(sc), sc);
 
     $('#circle').circleProgress({
-      value: sc,
+      value: parseFloat(sc),
       size: 400,
       thickness: 70,
     }).on('circle-animation-progress', function(event, v) {
-        sc = self.score;
+        console.log('Type of sc 3: ', typeof(sc));
+        sc = self.data['s']
+        console.log('After: ', typeof(sc), ' sc: ', sc)
         var obj = $(this).data('circle-progress'),
             ctx = obj.ctx,
             s = obj.size;
@@ -173,14 +183,16 @@ var app = new Vue({
   methods: {
     animateProgressBar: function() {
       console.log("animate handler called");
-
     },
     calculate: function() {
       axios.get('/get_score')
             .then((resp) => {
-              this.score = resp.data;
-              console.log(resp);
-              $('#circle').circleProgress('value', this.score);
+              this.data = resp.data;
+              console.log('This at load '+this.data);
+              var s = resp.data['s'];
+              console.log(s + ' ' + typeof(s));
+              console.log(resp.data);
+              $('#circle').circleProgress('value', parseFloat(s));
             })
            .catch(function(err){console.log(err);});
     },
@@ -194,7 +206,7 @@ var app = new Vue({
         xfbml      : true,
         version    : 'v2.7' // or v2.6, v2.5, v2.4, v2.3
       });
-       
+
       // Load the SDK asynchronously
       (function(d) {
         var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
@@ -218,7 +230,7 @@ var app = new Vue({
         console.log(response);
       });
 
-      }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});            
+      }, {scope: 'read_stream,publish_stream,publish_actions,read_friendlists'});
     },
 
     twitterLoginHandler: function() {
@@ -233,6 +245,6 @@ var app = new Vue({
   computed: {
     computedScore: function() {
       return this.score+=1;
-    } 
+    }
   }
 });
